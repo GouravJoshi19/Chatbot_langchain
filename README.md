@@ -1,6 +1,9 @@
-
-
 # ChatbotWeb Application
+
+## Demo
+https://github.com/user-attachments/assets/9402f835-5c9b-4682-aed7-babaaa7e58fb
+
+
 
 ## Overview
 This project is a web application that features a text-based chatbot, developed using **Streamlit** and integrated with **Cohere's language model**. The application provides an interactive conversational interface to facilitate engaging dialogues.
