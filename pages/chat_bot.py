@@ -3,11 +3,12 @@ from langchain.llms import Cohere
 from langchain.prompts import ChatPromptTemplate
 from langchain.prompts import PromptTemplate
 from langchain.schema import SystemMessage,HumanMessage
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import ConversationChain
 import speech_recognition as sr
+
 import os
-
-#st.set_page_config(page_title="Interactive Chatbot", layout="wide")
-
+st.set_page_config(page_title="Interactive Chatbot", layout="wide")
 api_key="U2yytdyluVIAEUS0vEfJ5huHxmgGpy9nhkXtlSzG"
 os.environ["COHERE_API_KEY"]=api_key
 cohere_llm=Cohere(cohere_api_key=api_key,
@@ -28,14 +29,17 @@ prompt_1=ChatPromptTemplate([
     ('system',system_template),('user','{question}')
 ])
 
+
+memory=ConversationBufferMemory()
+conversation = ConversationChain(llm=cohere_llm, memory=memory)
+
 def generate(user_input):
   formatted_prompt=prompt_1.format(question=user_input)
-  Response=cohere_llm(formatted_prompt)
+  Response=conversation(formatted_prompt)
   return Response
 
-
-if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+if "conversation" not in st.session_state:
+    st.session_state = [{"role": "assistant", "content": "How can I help you?"}]
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
