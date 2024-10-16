@@ -9,8 +9,9 @@ import requests
 import os
 
 
-api_key="U2yytdyluVIAEUS0vEfJ5huHxmgGpy9nhkXtlSzG"
-os.environ["COHERE_API_KEY"]=api_key
+
+api_key=st.secrets.cohere_api.cohere_api_key
+
 cohere_llm=Cohere(cohere_api_key=api_key,
            model="command-xlarge-nightly",
            temperature=0.7,
